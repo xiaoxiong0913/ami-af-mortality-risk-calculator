@@ -1,0 +1,48 @@
+{
+  "status": "frozen",
+  "purpose": "MIMIC-only model for one authorized subsequent local-cohort score using the same six predictors.",
+  "development_boundary": "Feature processing, regularization, threshold, and model fitting used MIMIC only; no local cohort data were read.",
+  "input_file": "mimic_ami_af_development_final.csv",
+  "input_sha256": "72a4d13937842a309fd755ff1ae2c7a6bb49da8df39d9f94783a521359d955ea",
+  "laboratory_definition": "official_mimiciv_derived_concepts",
+  "query_sha256": "a6bbbd69d8c12f55466b50077c8e80e6b6f511923c16f2e4070ed084f51ec2af",
+  "execution_query_sha256": "5bd2be1898de4416d958b66f91d793d7de1ab1b42f0598fec725c389209902e3",
+  "rows": 4266,
+  "events_365": 1604,
+  "event_rate_365": 0.3759962494139709,
+  "random_seed": 42,
+  "model": "median-imputed, standardized L2 logistic regression",
+  "features": [
+    "age",
+    "hemoglobin_g_l",
+    "creatinine_umol_l",
+    "stemi",
+    "wbc_10e9_l",
+    "platelets_10e9_l"
+  ],
+  "unit_conversions": {
+    "hemoglobin_g_l": "hemoglobin_g_dl * 10.0",
+    "creatinine_umol_l": "creatinine_mg_dl * 88.4"
+  },
+  "tuning": {
+    "scoring": "negative log loss",
+    "folds": 5,
+    "selected_C": 0.03162277660168379,
+    "best_score": -0.6038469786267582
+  },
+  "threshold": {
+    "value": 0.38599622171991665,
+    "source": "MIMIC-only 5-fold OOF predictions after fixed-hyperparameter selection",
+    "rule": "Youden index"
+  },
+  "missingness_n": {
+    "age": 0,
+    "hemoglobin_g_l": 198,
+    "creatinine_umol_l": 142,
+    "stemi": 0,
+    "wbc_10e9_l": 200,
+    "platelets_10e9_l": 181
+  },
+  "model_sha256": "7e35542f364e72e6930abeefcd9d06744f861d0bf7de9ba34512ca6bfc7d390a",
+  "individual_predictions_written": false
+}
