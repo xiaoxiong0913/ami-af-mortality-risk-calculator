@@ -99,14 +99,19 @@ def main() -> None:
         if calculate:
             probability = float(model.predict_proba(case_frame(age, hemoglobin, creatinine, stemi, wbc, platelets))[:, 1][0])
             st.metric(reporting["endpoint"]["calculator_metric"], f"{probability:.1%}")
+            cutoff = float(reporting["threshold"]["value"])
+            if probability >= cutoff:
+                st.error(f"High-risk group (cutoff: {cutoff:.1%})")
+            else:
+                st.success(f"Low-risk group (cutoff: {cutoff:.1%})")
         else:
             st.info("Enter values and select Calculate predicted risk.")
-        st.caption("Model version: frozen seed-42 six-predictor model")
-        st.caption(f"Model SHA-256: {freeze['model_sha256']}")
+        st.caption(f"Risk classification cutoff: {float(reporting['threshold']['value']):.1%}")
 
     st.divider()
-    st.caption("Research-use tool. This estimate does not replace clinical assessment, guideline-directed treatment, or shared decision-making.")
+    st.caption("The calculator supports individualized risk assessment and should be interpreted together with the patient's clinical condition.")
 
 
 if __name__ == "__main__":
     main()
+
